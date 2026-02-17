@@ -1,5 +1,5 @@
 
-## Small Flask App Skeleton
+## Small Flask App Skeleton  (Progress so far) 
 
 This project provides a minimal, production-style Flask application structure
 with SQLite (via SQLAlchemy) and Flask-Login wired up. Models and routes are
