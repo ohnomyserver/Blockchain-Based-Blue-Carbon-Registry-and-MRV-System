@@ -1,31 +1,40 @@
+ 🌊 Blockchain-Based Blue Carbon Registry & MRV System
 
-## Small Flask App Skeleton  (Progress so far) 
+A backend system for registering, issuing, and transferring blue carbon credits — with on-chain auditability via an Ethereum smart contract.
 
-This project provides a minimal, production-style Flask application structure
-with SQLite (via SQLAlchemy) and Flask-Login wired up. Models and routes are
-intentionally left for you to implement.
 
-### Setup
 
-```bash
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
+ What this project does
 
-### Running
+Blue carbon credits represent carbon sequestered by coastal and marine ecosystems (mangroves, seagrasses, salt marshes). This system allows:
 
-Create an entry point such as `wsgi.py` or `run.py` that imports
-`create_app` from `app` and runs the app, for example:
+- Companies to register and hold carbon credit balances
+- Admins to issue verified credits to registered companies
+- Companies to transfer credits between each other
+- Every transaction to be recorded both in a database and on-chain via a Solidity smart contract
 
-```python
-from app import create_app
 
-app = create_app()
 
-if __name__ == "__main__":
-    app.run(debug=True)
-```
+Progress so far
 
-# Blockchain-Based-Blue-Carbon-Registry-and-MRV-System
+**v1.0 — Flask Skeleton**
+→ App factory pattern with SQLAlchemy and Flask-Login wired up
+→ Base `User` model
+→ Basic project structure
 
+**v2.0 — Auth, Credits & Blockchain Foundation** *(current)*
+→ User authentication — register, login, logout, session management
+→ Company model linked to users with a credit balance
+→ Admin-only credit issuance with full transaction records
+→ Credit transfers between companies with balance validation
+→ `CarbonRegistry.sol` — Solidity smart contract with on-chain balances and events
+→ Environment config via `.env` for blockchain variables
+
+
+
+
+ Tech Stack
+
+- **Backend** — Flask, Flask-SQLAlchemy, Flask-Login, Flask-Bcrypt
+- **Database** — SQLite
+- **Blockchain** — Solidity `^0.8.0`, Web3.py, Ganache
