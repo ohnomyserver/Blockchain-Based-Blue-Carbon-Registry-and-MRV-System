@@ -56,7 +56,7 @@ def issue_credits():
         contract = get_contract()
         admin_account = get_admin_account()
         
-        company_address = Web3.to_checksum_address(f"0x{company.user_id:040x}")
+        company_address = company.eth_address
         
         tx = contract.functions.issueCredits(
             company_address,
@@ -127,10 +127,9 @@ def transfer_credits():
     # Blockchain transaction
     try:
         contract = get_contract()
-        sender_user = sender.owner
         
-        sender_address = Web3.to_checksum_address(f"0x{sender.user_id:040x}")
-        receiver_address = Web3.to_checksum_address(f"0x{receiver.user_id:040x}")
+        sender_address = sender.eth_address
+        receiver_address = receiver.eth_address
         
         tx = contract.functions.transferCredits(
             receiver_address,
@@ -142,10 +141,7 @@ def transfer_credits():
             'gasPrice': contract.w3.eth.gas_price
         })
         
-        # Note: This requires sender's private key - needs proper key management
-        # For now, using admin key as placeholder
-        admin_account = get_admin_account()
-        signed_tx = contract.w3.eth.account.sign_transaction(tx, admin_account.key)
+        signed_tx = contract.w3.eth.account.sign_transaction(tx, sender.eth_private_key)
         tx_hash = contract.w3.eth.send_raw_transaction(signed_tx.raw_transaction)
         receipt = contract.w3.eth.wait_for_transaction_receipt(tx_hash)
         
