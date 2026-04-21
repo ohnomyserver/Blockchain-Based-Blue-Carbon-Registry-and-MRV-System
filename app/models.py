@@ -33,6 +33,8 @@ class Company(db.Model):
     credit_balance = db.Column(db.Float, default=0.0, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    eth_address = db.Column(db.String(42), unique=True, nullable=True)
+    eth_private_key = db.Column(db.String(66), nullable=True)
 
     credits = db.relationship("CarbonCredit", backref="company", lazy=True)
     sent_transactions = db.relationship("Transaction", foreign_keys="Transaction.sender_id", backref="sender", lazy=True)

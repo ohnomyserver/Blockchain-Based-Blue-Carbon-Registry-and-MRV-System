@@ -3,16 +3,16 @@ from flask_login import login_user, logout_user, login_required, current_user
 
 from .extensions import db
 from .models import User
+from .schemas import UserRegisterSchema, UserLoginSchema
+from .utils.validators import validate_request
 
 auth = Blueprint("auth", __name__, url_prefix="/auth")
 
 
 @auth.route("/register", methods=["POST"])
+@validate_request(UserRegisterSchema)
 def register():
-    data = request.get_json()
-
-    if not data or not all(k in data for k in ("username", "email", "password")):
-        return jsonify({"error": "username, email and password are required"}), 400
+    data = request.validated_data
 
     if User.query.filter_by(email=data["email"]).first():
         return jsonify({"error": "Email already registered"}), 409
@@ -30,11 +30,9 @@ def register():
 
 
 @auth.route("/login", methods=["POST"])
+@validate_request(UserLoginSchema)
 def login():
-    data = request.get_json()
-
-    if not data or not all(k in data for k in ("email", "password")):
-        return jsonify({"error": "email and password are required"}), 400
+    data = request.validated_data
 
     user = User.query.filter_by(email=data["email"]).first()
 
